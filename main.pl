@@ -1,31 +1,40 @@
-go :-
-    write('Qual é o nome do paciente? '),
+
+iniciar :- use_module(library(pce)),
+    new(D, dialog('Identificador do paciente')),
+    send(D, append(new(NameItem, text_item(name)))),
+    send(D, append(button(ok, message(D, return, NameItem?selection)))),
+    send(D, append(button(cancel, message(D, return, @nil)))),
+    send(D, default_button(ok)),
+    get(D, confirm, Rval),
+    free(D),
+    Rval \== @nil,
+    Paciente = Rval.
     read(Paciente),
     diagnostico(Paciente,Doenca),
-    write_list(['O ',Paciente,' possivelmente tem a ',Doenca,'.']),nl.
+    escreveNaLista(['O ',Paciente,' possivelmente tem a ',Doenca,'.']),nl.
 
-go :-
+iniciar :-
     write('sua doenca não pode ser diagnosticada.'),nl.
 
 sintoma(Paciente,corrimentoPeloColoDoUtero) :-
-    write_list(['O ',Paciente,' apresenta corrimento no colo do utero (s/n) ?']),
-    response(Reply),
-    Reply='s'.
+    escreveNaLista(['O ',Paciente,' apresenta corrimento no colo do utero (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
 sintoma(Paciente,coceiraNaGenitalia) :-
-    write_list(['O ',Paciente,' apresenta coceira na genitalia (s/n) ?']),
-    response(Reply),
-    Reply='s'.
+    escreveNaLista(['O ',Paciente,' apresenta coceira na genitalia (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
 sintoma(Paciente,dorAoUrinar) :-
-    write_list(['O ',Paciente,' apresenta dor ao urinar (s/n) ?']),
-    response(Reply),
-    Reply='s'.
+    escreveNaLista(['O ',Paciente,' apresenta dor ao urinar (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
 sintoma(Paciente,odorRuimNaRegiao) :-
-    write_list(['O ',Paciente,' apresenta odor ruim na região (s/n) ?']),
-    response(Reply),
-    Reply='s'.
+    escreveNaLista(['O ',Paciente,' apresenta odor ruim na região (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
 
 diagnostico(Paciente,gonorreia) :-
@@ -41,13 +50,12 @@ diagnostico(Paciente,tricomoniase) :-
     sintoma(Paciente,coceiraNaGenitalia).
 
 
+escreveNaLista([]).
+escreveNaLista([Termo| Termos]) :-
+    write(Termo),
+    escreveNaLista(Termos).
 
-write_list([]).
-write_list([Term| Terms]) :-
-    write(Term),
-    write_list(Terms).
-
-response(Reply) :-
-    get_single_char(Code),
-    put_code(Code), nl,
-    char_code(Reply, Code).
+resposta(RespostaDoSintoma) :-
+    get_single_char(Codigo),
+    put_code(Codigo), nl,
+    char_code(RespostaDoSintoma, Codigo).
