@@ -15,7 +15,7 @@ iniciar :- use_module(library(pce)),
 iniciar :-
     write('Não foi possivel gerar diagnostico.'),nl.
 
-sintoma(Paciente,sexoPaciente) :-
+sexoPaciente(Paciente) :-
     escreveNaLista(['O ',Paciente,' é do sexo feminino (s/n) ?']),
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
@@ -92,18 +92,14 @@ sintoma(Paciente,manchasNaVirilha) :-
 
 
 /* Diagnosticos */
-
 sintomasComuns(Paciente):- 
     sintoma(Paciente,dorAoUrinar), 
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia). 
-
-sexoPaciente(Paciente):-
-    sintoma(Paciente,sexoPaciente).
     
 diagnostico(Paciente,gonorreia) :- 
-    /* Mulher */
     sexoPaciente(Paciente),
+    /* Mulher */
     sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
     sintoma(Paciente,dorDuranteRelacaoSexual),
@@ -118,8 +114,9 @@ diagnostico(Paciente,gonorreia) :-
 diagnostico(Paciente,tricomoniase) :-
     /* Mulher */
     sintoma(Paciente,dorDuranteRelacaoSexual),
-    sintoma(Paciente,corrimentoPeloColoDoUtero).
-
+    sintoma(Paciente,corrimentoPeloColoDoUtero),
+    sintomasComuns(Paciente).
+    
 diagnostico(Paciente,sífilis) :-
     sintoma(Paciente,presençaFeridasNaRegiãoGenital),
     sintoma(Paciente,protuberanciasNosGenitais).
