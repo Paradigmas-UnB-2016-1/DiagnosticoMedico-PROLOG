@@ -31,12 +31,12 @@ sintoma(Paciente,dorAoUrinar) :-
     RespostaDoSintoma ='s'.
 
 sintoma(Paciente,odorRuimNaRegiao) :-
-    escreveNaLista(['O ',Paciente,' apresenta odor ruim na região (s/n) ?']),
+    escreveNaLista(['O ',Paciente,' apresenta odor ruim na região genital (s/n) ?']),
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
 sintoma(Paciente,dorDuranteRelacaoSexual) :-
-    escreveNaLista(['O ',Paciente,' apresenta dor durante relacao sexual (s/n) ?']),
+    escreveNaLista(['O ',Paciente,' apresenta dor durante relação sexual (s/n) ?']),
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
@@ -46,7 +46,7 @@ sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao) :-
     RespostaDoSintoma ='s'.
 
 sintoma(Paciente,sangramentoDuranteRelacoaSexual) :-
-    escreveNaLista(['O ',Paciente,' apresenta sangramento durante relacao sexual (s/n) ?']),
+    escreveNaLista(['O ',Paciente,' apresenta sangramento durante relação sexual (s/n) ?']),
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
@@ -85,7 +85,10 @@ sintoma(Paciente,manchasNaVirilha) :-
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
-diagnostico(Paciente,gonorreia) :- /* Ja foi */
+
+/* Diagnosticos */
+
+diagnostico(Paciente,gonorreia) :- 
     sintoma(Paciente,dorAoUrinar), 
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia), 
@@ -97,7 +100,7 @@ diagnostico(Paciente,gonorreia) :- /* Ja foi */
     /* Homens */
     sintoma(Paciente,dorNosTesticulos).
 
-diagnostico(Paciente,clamidia) :- /* Ja foi */
+diagnostico(Paciente,clamidia) :- 
     sintoma(Paciente,dorAoUrinar), 
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia), 
@@ -110,11 +113,12 @@ diagnostico(Paciente,clamidia) :- /* Ja foi */
     sintoma(Paciente,dorNosTesticulos).
 
 diagnostico(Paciente,tricomoniase) :-
-    sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,dorAoUrinar),
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia),
     sintoma(Paciente,dorDuranteRelacaoSexual). 
+    /* Mulher */
+    sintoma(Paciente,corrimentoPeloColoDoUtero), 
 
 diagnostico(Paciente,sífilis) :-
     sintoma(Paciente,presençaFeridasNaRegiãoGenital),
