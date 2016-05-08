@@ -55,13 +55,23 @@ sintoma(Paciente,dorNosTesticulos) :-
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
+sintoma(Paciente,presençaFeridasNaRegiãoGenital) :-
+    escreveNaLista(['O ',Paciente,' apresenta presença de feridas na região genital (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+sintoma(Paciente,protuberanciasNosGenitais) :-
+    escreveNaLista(['O ',Paciente,' apresenta protuberâncias como verrugas nos genitais, úlceras ou úlceras indolores (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
 
 diagnostico(Paciente,gonorreia) :- /* Ja foi */
-    sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,dorAoUrinar), 
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia), 
     /* Mulher */
+    sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
     sintoma(Paciente,dorDuranteRelacaoSexual),
     sintoma(Paciente,sangramentoDuranteRelacoaSexual),
@@ -69,11 +79,11 @@ diagnostico(Paciente,gonorreia) :- /* Ja foi */
     sintoma(Paciente,dorNosTesticulos).
 
 diagnostico(Paciente,clamidia) :- /* Ja foi */
-    sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,dorAoUrinar), 
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia), 
     /* Mulher */
+    sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
     sintoma(Paciente,dorDuranteRelacaoSexual),
     sintoma(Paciente,sangramentoDuranteRelacoaSexual),
@@ -86,6 +96,11 @@ diagnostico(Paciente,tricomoniase) :-
     sintoma(Paciente,odorRuimNaRegiao),
     sintoma(Paciente,coceiraNaGenitalia),
     sintoma(Paciente,dorDuranteRelacaoSexual). 
+
+diagnostico(Paciente,sífilis) :-
+    sintoma(Paciente,presençaFeridasNaRegiãoGenital),
+    sintoma(Paciente,protuberanciasNosGenitais).
+
 
 escreveNaLista([]).
 escreveNaLista([Termo| Termos]) :-
