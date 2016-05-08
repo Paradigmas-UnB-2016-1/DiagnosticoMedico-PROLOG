@@ -13,7 +13,12 @@ iniciar :- use_module(library(pce)),
     escreveNaLista(['O paciente ',Paciente,' possivelmente tem ',Doenca,'.']),nl.
 
 iniciar :-
-    write('sua doenca não pode ser diagnosticada.'),nl.
+    write('Não foi possivel gerar diagnostico.'),nl.
+
+sintoma(Paciente,sexoPaciente) :-
+    escreveNaLista(['O ',Paciente,' é do sexo feminino (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
 sintoma(Paciente,corrimentoPeloColoDoUtero) :-
     escreveNaLista(['O ',Paciente,' apresenta corrimento no colo do utero (s/n) ?']),
@@ -88,37 +93,32 @@ sintoma(Paciente,manchasNaVirilha) :-
 
 /* Diagnosticos */
 
-diagnostico(Paciente,gonorreia) :- 
+sintomasComuns(Paciente):- 
     sintoma(Paciente,dorAoUrinar), 
     sintoma(Paciente,odorRuimNaRegiao),
-    sintoma(Paciente,coceiraNaGenitalia), 
-    /* Mulher */
-    sintoma(Paciente,corrimentoPeloColoDoUtero), 
-    sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
-    sintoma(Paciente,dorDuranteRelacaoSexual),
-    sintoma(Paciente,sangramentoDuranteRelacoaSexual),
-    /* Homens */
-    sintoma(Paciente,dorNosTesticulos).
+    sintoma(Paciente,coceiraNaGenitalia). 
 
-diagnostico(Paciente,clamidia) :- 
-    sintoma(Paciente,dorAoUrinar), 
-    sintoma(Paciente,odorRuimNaRegiao),
-    sintoma(Paciente,coceiraNaGenitalia), 
+sexoPaciente(Paciente):-
+    sintoma(Paciente,sexoPaciente).
+    
+diagnostico(Paciente,gonorreia) :- 
     /* Mulher */
+    sexoPaciente(Paciente),
     sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
     sintoma(Paciente,dorDuranteRelacaoSexual),
-    sintoma(Paciente,sangramentoDuranteRelacoaSexual),
+    sintomasComuns(Paciente),
+    sintoma(Paciente,sangramentoDuranteRelacoaSexual).
+
+diagnostico(Paciente,gonorreia) :-
     /* Homens */
-    sintoma(Paciente,dorNosTesticulos).
+    sintoma(Paciente,dorNosTesticulos),
+    sintomasComuns(Paciente).
 
 diagnostico(Paciente,tricomoniase) :-
-    sintoma(Paciente,dorAoUrinar),
-    sintoma(Paciente,odorRuimNaRegiao),
-    sintoma(Paciente,coceiraNaGenitalia),
-    sintoma(Paciente,dorDuranteRelacaoSexual). 
     /* Mulher */
-    sintoma(Paciente,corrimentoPeloColoDoUtero), 
+    sintoma(Paciente,dorDuranteRelacaoSexual),
+    sintoma(Paciente,corrimentoPeloColoDoUtero).
 
 diagnostico(Paciente,sífilis) :-
     sintoma(Paciente,presençaFeridasNaRegiãoGenital),
