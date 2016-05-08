@@ -10,7 +10,7 @@ iniciar :- use_module(library(pce)),
     Rval \== @nil,
     Paciente = Rval,
     diagnostico(Paciente,Doenca),
-    escreveNaLista(['O ',Paciente,' possivelmente tem a ',Doenca,'.']),nl.
+    escreveNaLista(['O paciente ',Paciente,' possivelmente tem ',Doenca,'.']),nl.
 
 iniciar :-
     write('sua doenca não pode ser diagnosticada.'),nl.
@@ -65,6 +65,25 @@ sintoma(Paciente,protuberanciasNosGenitais) :-
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
+sintoma(Paciente,feridasMultiplas) :-
+    escreveNaLista(['O ',Paciente,' apresenta feridas múltiplas e dolorosas de tamanho pequeno (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+sintoma(Paciente,nodulosNaVirilha) :-
+    escreveNaLista(['O ',Paciente,' apresenta nódulos (caroços ou ínguas) navirilha (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+sintoma(Paciente,erupcoesCorpo) :-
+    escreveNaLista(['O ',Paciente,' apresenta bolha, erupções, sarna ou úlcera na região genital (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+sintoma(Paciente,manchasNaVirilha) :-
+    escreveNaLista(['O ',Paciente,' apresenta manchas vermelhas e pequenas bolhas esbranquiçadas na região genital (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
 diagnostico(Paciente,gonorreia) :- /* Ja foi */
     sintoma(Paciente,dorAoUrinar), 
@@ -100,6 +119,14 @@ diagnostico(Paciente,tricomoniase) :-
 diagnostico(Paciente,sífilis) :-
     sintoma(Paciente,presençaFeridasNaRegiãoGenital),
     sintoma(Paciente,protuberanciasNosGenitais).
+
+diagnostico(Paciente,crancoMole) :-
+    sintoma(Paciente,feridasMultiplas),
+    sintoma(Paciente,nodulosNaVirilha).
+
+diagnostico(Paciente,herpesGenital) :-
+    sintoma(Paciente,erupcoesCorpo),
+    sintoma(Paciente,manchasNaVirilha).
 
 
 escreveNaLista([]).
