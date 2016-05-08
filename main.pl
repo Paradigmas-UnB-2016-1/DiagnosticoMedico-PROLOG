@@ -8,8 +8,7 @@ iniciar :- use_module(library(pce)),
     get(D, confirm, Rval),
     free(D),
     Rval \== @nil,
-    Paciente = Rval.
-    read(Paciente),
+    Paciente = Rval,
     diagnostico(Paciente,Doenca),
     escreveNaLista(['O ',Paciente,' possivelmente tem a ',Doenca,'.']),nl.
 
@@ -36,19 +35,57 @@ sintoma(Paciente,odorRuimNaRegiao) :-
     resposta(RespostaDoSintoma),
     RespostaDoSintoma ='s'.
 
+sintoma(Paciente,dorDuranteRelacaoSexual) :-
+    escreveNaLista(['O ',Paciente,' apresenta dor durante relacao sexual (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
 
-diagnostico(Paciente,gonorreia) :-
-    sintoma(Paciente,corrimentoPeloColoDoUtero),
-    sintoma(Paciente,coceiraNaGenitalia),
-    sintoma(Paciente,dorAoUrinar),
-    sintoma(Paciente,odorRuimNaRegiao).
+sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao) :-
+    escreveNaLista(['O ',Paciente,' apresenta sangramento fora do periodo menstruacao (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+sintoma(Paciente,sangramentoDuranteRelacoaSexual) :-
+    escreveNaLista(['O ',Paciente,' apresenta sangramento durante relacao sexual (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+sintoma(Paciente,dorNosTesticulos) :-
+    escreveNaLista(['O ',Paciente,' apresenta dor nos testiculos (s/n) ?']),
+    resposta(RespostaDoSintoma),
+    RespostaDoSintoma ='s'.
+
+
+diagnostico(Paciente,gonorreia) :- /* Ja foi */
+    sintoma(Paciente,corrimentoPeloColoDoUtero), 
+    sintoma(Paciente,dorAoUrinar), 
+    sintoma(Paciente,odorRuimNaRegiao),
+    sintoma(Paciente,coceiraNaGenitalia), 
+    /* Mulher */
+    sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
+    sintoma(Paciente,dorDuranteRelacaoSexual),
+    sintoma(Paciente,sangramentoDuranteRelacoaSexual),
+    /* Homens */
+    sintoma(Paciente,dorNosTesticulos).
+
+diagnostico(Paciente,clamidia) :- /* Ja foi */
+    sintoma(Paciente,corrimentoPeloColoDoUtero), 
+    sintoma(Paciente,dorAoUrinar), 
+    sintoma(Paciente,odorRuimNaRegiao),
+    sintoma(Paciente,coceiraNaGenitalia), 
+    /* Mulher */
+    sintoma(Paciente,sangramentoForaDoPeriodoMenstruacao),
+    sintoma(Paciente,dorDuranteRelacaoSexual),
+    sintoma(Paciente,sangramentoDuranteRelacoaSexual),
+    /* Homens */
+    sintoma(Paciente,dorNosTesticulos).
 
 diagnostico(Paciente,tricomoniase) :-
-    sintoma(Paciente,corrimentoPeloColoDoUtero),
+    sintoma(Paciente,corrimentoPeloColoDoUtero), 
     sintoma(Paciente,dorAoUrinar),
     sintoma(Paciente,odorRuimNaRegiao),
-    sintoma(Paciente,coceiraNaGenitalia).
-
+    sintoma(Paciente,coceiraNaGenitalia),
+    sintoma(Paciente,dorDuranteRelacaoSexual). 
 
 escreveNaLista([]).
 escreveNaLista([Termo| Termos]) :-
