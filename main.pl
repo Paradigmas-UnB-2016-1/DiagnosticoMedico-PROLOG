@@ -1,6 +1,7 @@
 
-iniciar :- use_module(library(pce)),
+main :- use_module(library(pce)),
     new(D, dialog('Identificador do paciente')),
+    send(D, size, size(350,120)),
     send(D, append(new(NameItem, text_item(name)))),
     send(D, append(button(ok, message(D, return, NameItem?selection)))),
     send(D, append(button(cancel, message(D, return, @nil)))),
@@ -12,9 +13,13 @@ iniciar :- use_module(library(pce)),
     diagnostico(Paciente,Doenca),
     escreveNaLista(['O paciente ',Paciente,' possivelmente tem ',Doenca,'.']),nl.
 
-iniciar :-
-    write('Não foi possivel gerar diagnostico.'),nl.
-
+main :- use_module(library(pce)),
+    new(D, window('Notificação')),
+    send(D, size, size(350, 120)),
+    new(T, text('Não foi possivel gerar diagnostico.')),
+    send(D, display, T, point(80,40)),
+    send(D, open).
+   
 sexoPaciente(Paciente) :-
     escreveNaLista(['O ',Paciente,' é do sexo feminino (s/n) ?']),
     resposta(RespostaDoSintoma),
