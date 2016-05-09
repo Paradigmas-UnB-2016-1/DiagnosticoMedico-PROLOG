@@ -52,5 +52,3 @@ herpesGenital(sintoma(manchasNaVirilha),sexo(masculino)).
 herpesGenital(sintoma(erupcoesCorpo),sexo(feminino)).
 herpesGenital(sintoma(manchasNaVirilha),sexo(feminino)).
 
-/* */
-issoE(X,Z,Y):-gonorreia(sintoma(X),sexo(Y)),gonorreia(sintoma(Z),sexo(Y)).
